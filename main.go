@@ -74,7 +74,7 @@ func main() {
 
 	s := gocron.NewScheduler(time.UTC)
 
-	s.Every("1m").Do(func() {
+	s.Every("10m").Do(func() {
 		fmt.Println("Starting")
 
 		res1, err := getMyIpResponse(url1)
