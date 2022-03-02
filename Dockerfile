@@ -3,8 +3,8 @@
 FROM golang:1.17-alpine as build-env
  
 # Set environment variable
-ENV APP_NAME dyndns
-ENV CMD_PATH dyndns.go
+ENV APP_NAME dyndns-updater
+ENV CMD_PATH main.go
  
 # Copy application data into image
 COPY . $GOPATH/src/$APP_NAME
@@ -17,7 +17,7 @@ RUN CGO_ENABLED=0 go build -v -o /$APP_NAME $GOPATH/src/$APP_NAME/$CMD_PATH
 FROM alpine:3
  
 # Set environment variable
-ENV APP_NAME dyndns
+ENV APP_NAME dyndns-updater
  
 # Copy only required data into this image
 COPY --from=build-env /$APP_NAME .
