@@ -71,6 +71,7 @@ func main() {
 	url1 := "https://api4.my-ip.io/ip.json"
 	secret := os.Getenv("DYNDNS_SECRET")
 	subdomain := os.Getenv("DYNDNS_SUBDOMAIN")
+	nameserver := os.Getenv("DYNDNS_NAMESERVER")
 
 	s := gocron.NewScheduler(time.UTC)
 
@@ -83,7 +84,7 @@ func main() {
 		}
 		log.Println("IP response was ", res1)
 		if res1.Success {
-			url2 := fmt.Sprintf("https://ns.kleinklein.net/update?secret=%s&domain=%s&addr=%s", secret, subdomain, res1.IP)
+			url2 := fmt.Sprintf("https://%s/update?secret=%s&domain=%s&addr=%s", nameserver, secret, subdomain, res1.IP)
 
 			res2, err := getDyndnsReponse(url2)
 			if err != nil {
