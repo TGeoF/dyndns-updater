@@ -72,10 +72,14 @@ func main() {
 	secret := os.Getenv("DYNDNS_SECRET")
 	subdomain := os.Getenv("DYNDNS_SUBDOMAIN")
 	nameserver := os.Getenv("DYNDNS_NAMESERVER")
+	interval := os.Getenv("DYNDNS_INTERVAL")
+	if interval == "" {
+		interval = "10m"
+	}
 
 	s := gocron.NewScheduler(time.UTC)
 
-	s.Every("10m").Do(func() {
+	s.Every(interval).Do(func() {
 		fmt.Println("Starting")
 
 		res1, err := getMyIpResponse(url1)
@@ -92,7 +96,7 @@ func main() {
 			}
 			log.Println("DNS response was ", res2)
 		} else {
-			fmt.Println("Not sending DNS request due to IP failure")
+			fmt.Println("Not sending DNS request due to IP request failure")
 		}
 	})
 
